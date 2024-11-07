@@ -198,7 +198,7 @@ def setup_argparse() -> argparse.ArgumentParser:
     
     # 模型參數組
     model_group = parser.add_argument_group('模型參數')
-    model_group.add_argument('--rerank-mode', choices=['fast_rerank', 'llm_rerank'], default='fast_rerank',
+    model_group.add_argument('--rerank-mode', choices=['fast_rerank', 'llm_rerank'], default='llm_rerank',
                            help='重排序模式 (預設: fast_rerank)')
     model_group.add_argument('--llm-provider', type=str, default='openai',
                            choices=['openai', 'claude'],
@@ -216,6 +216,10 @@ def interactive_mode(engine: SearchEngine):
     while True:
         try:
             query = input("\n請輸入您的問題: ").strip()
+            category = input("請輸入文檔類別: ").strip()
+            doc_ids = input("請輸入文檔ID列表 (用逗號分隔): ").strip().split(',')
+            knn_weight = float(input("請輸入向量搜索權重 (0-1之間): "))
+            top_k = int(input("請輸入返回結果數量: "))
             
             if query.lower() in ['quit', 'exit']:
                 print("謝謝使用，再見！")
@@ -224,16 +228,26 @@ def interactive_mode(engine: SearchEngine):
             if not query:
                 continue
                 
-            relevant_docs = engine.retrieve(query)
+            relevant_docs = engine.retrieve(
+                query,
+                top_k=top_k,
+                rerank_k = 10,
+                category=category,
+                doc_ids=doc_ids,
+                knn_weight=knn_weight,
+                use_rerank=True,
+            )
             
             if relevant_docs:
                 print("\n📚 找到的相關文檔:")
                 for i, doc in enumerate(relevant_docs, 1):
                     print(f"{i}. {doc}")
                 
-                context = " ".join(relevant_docs)
+                context = " ".join([doc.get('content') for doc in relevant_docs])
+                doc_ids = [doc.get('id') for doc in relevant_docs]
+
                 print("\n🤖 生成回應中...")
-                response = engine.generate_response(query, context)
+                response = engine.generate_response(query, context, doc_ids)
                 print(f"\n回應: {response}")
             else:
                 print("\n❌ 未找到相關文檔")
