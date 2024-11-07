@@ -23,12 +23,12 @@ class AnswerGenerator:
             },
             'finance': {
                 'top_k': 1,
-                'knn_weight': 0.7,
+                'knn_weight': 0.5,
                 'use_rerank': True
             },
             'insurance': {
                 'top_k': 1,
-                'knn_weight': 1,
+                'knn_weight': 0.5,
                 'use_rerank': True
             }
         }

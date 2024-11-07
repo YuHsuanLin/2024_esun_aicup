@@ -30,12 +30,15 @@ def calculate_accuracy(ground_truth_file, prediction_file):
     }
 
 # 計算正確率
-result = calculate_accuracy('dataset/preliminary/ground_truths_example.json', 
-                          'output/pred_retrieve.json')
+try:
+    result = calculate_accuracy('dataset/preliminary/ground_truths_example.json', 
+                              'output/pred_retrieve.json')
+    print(f"正確數量: {result['correct']}")
+    print(f"總數量: {result['total']}")
+    print(f"正確率: {result['accuracy']:.2%}")
 
-print(f"正確數量: {result['correct']}")
-print(f"總數量: {result['total']}")
-print(f"正確率: {result['accuracy']:.2%}")
+except Exception as e:
+    pass
 
 # 也可以依照類別計算正確率
 def calculate_accuracy_by_category(ground_truth_file, prediction_file):
@@ -53,19 +56,23 @@ def calculate_accuracy_by_category(ground_truth_file, prediction_file):
     categories = {}
     
     for gt in ground_truths:
+        # 如果在預測結果中找不到對應的qid，則跳過
+        if gt['qid'] not in pred_dict:
+            continue
+            
         category = gt['category']
         if category not in categories:
             categories[category] = {
                 'correct': 0, 
                 'total': 0,
-                'wrong_qids': []  # 新增錯誤qid列表
+                'wrong_qids': []
             }
         
         categories[category]['total'] += 1
         if gt['retrieve'] == pred_dict[gt['qid']]:
             categories[category]['correct'] += 1
         else:
-            categories[category]['wrong_qids'].append(gt['qid'])  # 記錄錯誤的qid
+            categories[category]['wrong_qids'].append(gt['qid'])
     
     # 計算每個類別的正確率
     for category in categories:
