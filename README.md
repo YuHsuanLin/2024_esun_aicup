@@ -52,6 +52,8 @@
 
 ## 使用方法
 
+### main.py
+
 ### 搜尋
 ```
 python main.py --mode search --query "你的問題" --top-k 3 --category "分類" --doc_ids doc1 doc2 --knn-weight 0.8 --rerank-k 5 --llm-provider openai --rerank-mode llm_rerank --use-rerank True 
@@ -67,7 +69,7 @@ python main.py --mode retrieve --query "你的問題" --top-k 5 --category "分�
 python main.py --mode interactive
 ```
 
-##參數說明
+###參數說明
 ```
 參數	說明
 --mode	運行模式：index, search, retrieve, interactive (預設)
@@ -81,6 +83,20 @@ python main.py --mode interactive
 --rerank-mode	重排序模式: fast_rerank, llm_rerank (預設: fast_rerank)
 --llm-provider	LLM 提供商: openai, claude (預設: openai)
 --use-rerank	是否使用重排序 (預設: True)
+```
+
+### answer.py
+
+### 產生要求的回答json檔
+```
+python answer.py 
+```
+
+##參數說明
+```
+參數    說明
+--category 問題類型 (all, finance, insurance, faq)
+--num_questions 回答的數量 (預設: 0, 表示全部作答) 
 ```
 
 ##架構
@@ -97,3 +113,5 @@ rerank_client.py: 負責對搜索結果進行重排序。
 rrf.py: 負責加權RRF計算
 
 main.py: 主程式，包含命令列介面和搜索引擎的主要邏輯。
+
+answer.py: 答題主程式。

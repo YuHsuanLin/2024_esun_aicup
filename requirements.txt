@@ -5,3 +5,4 @@ anthropic==0.37.1
 google-cloud==0.34.0
 google-auth==2.35.0
 llama-index-core==0.11.20
+pandas==2.2.3
