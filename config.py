@@ -11,5 +11,7 @@ GCP_REGION = os.getenv("GCP_REGION")
 GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID")
 GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 GCP_SONNET_MODEL = os.getenv("GCP_SONNET_MODEL")
+GCP_HAIKU_MODEL = os.getenv("GCP_HAIKU_MODEL")
 # Elasticsearch 設置
-ES_HOST = os.getenv("ES_HOST") 
+ES_HOST = os.getenv("ES_HOST")
+ES_INDEX_NAME = os.getenv("ES_INDEX_NAME")

@@ -16,12 +16,12 @@ from llama_index.core.indices.utils import (
 )
 
 
-def RerankClient(mode = 'fast_rerank'):
+def RerankClient(mode = 'fast_rerank', llm_provider: str = 'openai'):
     print(f"目前使用的重排序模式: {mode}")
     if mode == 'fast_rerank':
         return FastRerankClient()
     elif mode == 'llm_rerank':
-        return LLMRerankClient()
+        return LLMRerankClient(llm_provider=llm_provider)
     else:
         raise ValueError(f"不支持的重排序模式: {mode}")
 
@@ -66,11 +66,16 @@ class LLMRerankClient(BaseRerankClient):
             raw_response = self.llm_client.generate_rerank_response(f'{prompt_prefix}{prompt}')
             print("  - 已獲得 LLM 響應")
 
+            # print(f"  - 原始響應: {raw_response}")
             raw_choices, relevances = default_parse_choice_select_answer_fn(raw_response, len(nodes))
             choice_idxs = [int(choice) - 1 for choice in raw_choices]
             # choice_nodes = [nodes[idx] for idx in choice_idxs]
             # relevances = relevances or [1.0 for _ in choice_nodes]
             print(f"  - 解析結果: 選擇了 {len(choice_idxs)} 個文檔")
+
+            if not len(choice_idxs):
+                print(f"  ❌ 沒有選擇任何文檔, 返回原結果")
+                return candidates[:top_k]
 
             result = [candidates[int(idx)] for idx in choice_idxs[:top_k]]
             print(f"  ✓ 重排序完成，返回前 {top_k} 個結果")

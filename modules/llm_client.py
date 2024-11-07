@@ -89,7 +89,8 @@ class LLMClient:
 
     def _generate_claude_rerank_response(self, prompt: str) -> str:
         message = self.client.messages.create(
-            model=config.GCP_SONNET_MODEL,
+            # model=config.GCP_SONNET_MODEL,
+            model=config.GCP_HAIKU_MODEL,
             max_tokens=self.max_tokens, 
             temperature=self.temperature,
             messages=[
