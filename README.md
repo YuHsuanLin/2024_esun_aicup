@@ -53,17 +53,22 @@
 ## 使用方法
 
 ### 搜尋
-python main.py --mode search --query "你的問題" --top-k 3 --category "分類" --doc_ids doc1 doc2 --knn-weight 0.8 --rerank-k 5 --llm-provider claude --rerank-mode llm_rerank --use-rerank False
-
+```
+python main.py --mode search --query "你的問題" --top-k 3 --category "分類" --doc_ids doc1 doc2 --knn-weight 0.8 --rerank-k 5 --llm-provider openai --rerank-mode llm_rerank --use-rerank True 
+```
 
 ### 僅檢索 (不包含 LLM 回應)
+```
 python main.py --mode retrieve --query "你的問題" --top-k 5 --category "分類" --doc_ids doc1 doc2 --knn-weight 0.8 --rerank-k 5 --use-rerank True
+```
 
 ### 互動模式
+```
 python main.py --mode interactive
-
+```
 
 ##參數說明
+```
 參數	說明
 --mode	運行模式：index, search, retrieve, interactive (預設)
 --docs	文檔 JSON 文件路徑 (僅用於 index 模式)
@@ -76,6 +81,7 @@ python main.py --mode interactive
 --rerank-mode	重排序模式: fast_rerank, llm_rerank (預設: fast_rerank)
 --llm-provider	LLM 提供商: openai, claude (預設: openai)
 --use-rerank	是否使用重排序 (預設: True)
+```
 
 ##架構
 本專案採用模組化設計，主要包含以下模組：
