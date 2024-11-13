@@ -50,6 +50,14 @@
     ES_INDEX_NAME=<your_elasticsearch_index_name> # 預設為 "documents"
     ```
 
+## Preprocess
+```
+1. 將reference資料夾中的pdf檔案透過[marker](https://github.com/VikParuchuri/marker)和[llama_parse](https://github.com/run-llama/llama_parse)轉換成markdown格式
+2. 透過[preprocess/faq.py](./preprocess/faq.py)將reference資料夾中的faq.json轉換成elasticsearch的文件格式
+3. 透過[preprocess/insurance.py](./preprocess/insurance.py)將reference資料夾中的insurance資料夾中的文件轉換成elasticsearch的文件格式
+4. 透過[preprocess/finance.py](./preprocess/finance.py)將reference資料夾中的finance資料夾中的文件轉換成elasticsearch的文件格式
+```
+
 ## 使用方法
 
 ### main.py
