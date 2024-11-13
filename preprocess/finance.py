@@ -8,10 +8,9 @@ from llama_index.core import Document
 
 from main import SearchEngine
 from modules.llm_client import LLMClient
-from utils import read_md, clean_text
+from .utils import read_md, clean_text
 
 finance_folder = './reference/finance/output'
-
 
 def main():
     category = 'finance'

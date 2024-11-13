@@ -5,14 +5,13 @@ from llama_index.core.node_parser import (
 from llama_index.core import Document
 
 from main import SearchEngine
-from utils import read_md, clean_text
+from .utils import read_md, clean_text
 
 insurance_folder = './reference/insurance/output'
 
 def main():
     category = 'insurance'
     engine = SearchEngine()
-    llm = LLMClient(provider = 'claude')
     insurance_subfolders = os.listdir(insurance_folder)
     for subfolder in insurance_subfolders:
         content = read_md(insurance_folder, subfolder)
