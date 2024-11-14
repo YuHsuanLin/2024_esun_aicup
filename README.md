@@ -77,7 +77,7 @@ python main.py --mode retrieve --query "你的問題" --top-k 5 --category "分�
 python main.py --mode interactive
 ```
 
-###參數說明
+### 參數說明
 ```
 參數	說明
 --mode	運行模式：index, search, retrieve, interactive (預設)
@@ -100,14 +100,14 @@ python main.py --mode interactive
 python answer.py 
 ```
 
-##參數說明
+## 參數說明
 ```
 參數    說明
 --category 問題類型 (all, finance, insurance, faq)
 --num_questions 回答的數量 (預設: 0, 表示全部作答) 
 ```
 
-##架構
+## 架構
 本專案採用模組化設計，主要包含以下模組：
 
 es_client.py: 負責與 Elasticsearch 互動，執行索引和搜索操作。
